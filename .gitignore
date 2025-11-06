@@ -1,0 +1,9 @@
+# 忽略本地依賴
+node_modules
+
+# 忽略 VitePress 的快取和打包輸出
+docs/.vitepress/cache
+docs/.vitepress/dist
+
+# 完全忽略 docs/public 裡的所有下載檔案
+docs/public/
