@@ -23,3 +23,7 @@ crtl+x 保持 y enter回车确定保存
 ```bash
 btrfs quota rescan -w /vol2
 ```
+### 无root查看gotty用户名密码
+```bash
+ps aux | grep -E "app|pkg|center"
+```

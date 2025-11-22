@@ -2,3 +2,22 @@
 .VPNavBarTitle .text {
     font-size: 28px !important; 
   }
+/*
+ * 讓 QQ 群號變大、變彩色的自訂樣式
+ */
+ .qq-number {
+  /* 變大 (設定為 1.5 倍的目前字體大小) */
+  font-size: 1.5em; 
+
+  /* 加粗 */
+  font-weight: 700;
+
+  /* 變彩色 (使用 VitePress 的主題品牌顏色，會自動適應深淺模式) */
+  color: var(--vp-c-brand-1);
+
+  /* * (備選方案) 如果您不想要主題色，
+   * 想要一個固定的亮藍色 (像 QQ 的顏色)，
+   * 可以用下面這行替換掉上面那行 color：
+   * color: #00a0e9; 
+   */
+}
