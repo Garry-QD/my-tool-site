@@ -9,6 +9,7 @@ import '../style.css'  // 👈 修正点：这里保留你原本的两个点，�
 
 export default {
   extends: DefaultTheme, 
+  
   enhanceApp({ app }) {
     // 注册 CopyCard 组件
     app.component('CopyCard', CopyCard)
