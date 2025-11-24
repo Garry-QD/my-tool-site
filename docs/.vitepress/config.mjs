@@ -11,6 +11,7 @@ export default defineConfig({
       { text: '首页', link: '/' },
       { text: '飞牛大全', link: '/QA/wiki.md' },
       { text: '下载专区', link: '/downloads/downloads.md' },
+      { text: '互动交流', link: '/join-qq.md' },
     ], // <-- 那个错误就是因为少了这里的逗号
 
     // 侧边栏 (使用 'commands' 和 'downloads' 路径)
@@ -28,7 +29,8 @@ export default defineConfig({
         items: [
           { text: '磁盘修复扫描工具', link: '/downloads/tools.md' }, // (这个指向 docs/tools.md)
           { text: '其他工具下载', link: '/downloads/downloads.md' },// (这个指向 docs/downloads.md)
-          { text: 'deb离线升级镜像', link: '/deb/deb.md' } // (这个指向 /deb/deb.md)
+          { text: 'deb离线升级镜像', link: '/deb/deb.md' } ,// (这个指向 /deb/deb.md)
+          { text: '建站工具', link: '/scripts/website building.md' } 
         ]
       },
       {

@@ -18,6 +18,6 @@ sudo dpkg -i fnos0935.deb
 ---
 ### deb离线更新包
 > 方便离线或网络有问题的情况下更新
-- [点击下载 fnos0935.deb](http://qdnas.icu:8080/api/public/dl/o4WtcVJQ) 更新至11月1日
+- [点击下载 fnos0935.deb](http://qdnas.icu:18080/api/share/download/dfa8bdfe?path=%2Ffnos0935.deb) 更新至11月1日
 
 > 源自官方镜像站下载：https://s20.fnnas.net/s/e4de36f39422403ea7 飞牛官方deb镜像站
