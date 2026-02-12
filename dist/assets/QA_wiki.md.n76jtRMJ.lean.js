@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t,ah as l}from"./chunks/framework.CCrQnM72.js";const s=JSON.parse('{"title":"飞牛疑难百科","description":"","frontmatter":{},"headers":[],"relativePath":"QA/wiki.md","filePath":"QA/wiki.md"}'),o={name:"QA/wiki.md"};function i(n,r,h,m,f,p){return t(),a("div",null,[...r[0]||(r[0]=[l("",11)])])}const c=e(o,[["render",i]]);export{s as __pageData,c as default};
