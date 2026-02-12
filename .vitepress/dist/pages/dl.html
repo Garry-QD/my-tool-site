@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件下载跳转</title>
+    <style>
+        body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; background-color: #f5f5f5; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background: #fff; min-height: 100vh; box-sizing: border-box; }
+        .icon { font-size: 64px; margin-bottom: 20px; display: block; }
+        .file-name { font-size: 18px; font-weight: bold; color: #333; margin-bottom: 10px; word-break: break-all; }
+        .tip { color: #666; font-size: 14px; margin-bottom: 30px; }
+        .btn { display: inline-block; padding: 12px 30px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 25px; font-size: 16px; transition: background 0.3s; }
+        .btn:hover { background-color: #0056b3; }
+        
+        /* WeChat overlay */
+        #wechat-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1000; }
+        .arrow { position: absolute; top: 10px; right: 20px; width: 50px; height: 50px; border-right: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(45deg) skew(10deg, 10deg); }
+        .arrow::before { content: ''; position: absolute; top: 28px; left: 10px; width: 40px; height: 2px; background: #fff; transform: rotate(-45deg); }
+        .text-tip { position: absolute; top: 80px; right: 20px; color: #fff; font-size: 18px; line-height: 1.5; text-align: right; }
+        .text-tip span { color: #ffd700; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div id="wechat-overlay">
+        <div class="text-tip">
+            <p>请点击右上角 <span>...</span></p>
+            <p>选择 <span>在浏览器打开</span> 以下载文件</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div style="padding-top: 60px;">
+            <span class="icon">📄</span>
+            <div class="file-name" id="file-name">正在获取文件信息...</div>
+            <p class="tip" id="status-tip">正在尝试自动下载...</p>
+            <a id="download-btn" href="#" class="btn">点击下载</a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            function getQueryParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return decodeURIComponent(r[2]); return null;
+            }
+
+            var url = getQueryParam('url');
+            var name = getQueryParam('name');
+            
+            var fileNameElem = document.getElementById('file-name');
+            var statusTip = document.getElementById('status-tip');
+            var downloadBtn = document.getElementById('download-btn');
+            var overlay = document.getElementById('wechat-overlay');
+
+            if (!url) {
+                fileNameElem.innerText = '无效的链接';
+                statusTip.innerText = '缺少下载地址参数';
+                downloadBtn.style.display = 'none';
+                return;
+            }
+
+            if (name) {
+                fileNameElem.innerText = name;
+                document.title = '下载: ' + name;
+            } else {
+                fileNameElem.innerText = '文件下载';
+            }
+
+            downloadBtn.href = url;
+
+            // Detect WeChat
+            var ua = navigator.userAgent.toLowerCase();
+            var isWeChat = ua.indexOf('micromessenger') !== -1;
+
+            if (isWeChat) {
+                overlay.style.display = 'block';
+                statusTip.innerText = '请在浏览器中打开下载';
+                // Optional: Prevent automatic click in WeChat to avoid errors
+            } else {
+                // Auto download attempt
+                statusTip.innerText = '正在准备下载...';
+                setTimeout(function() {
+                    // Create a temporary link to simulate a click
+                    // This is often more reliable than window.location.replace for downloads
+                    var link = document.createElement('a');
+                    link.href = url;
+                    link.setAttribute('download', ''); // Hint to browser
+                    link.style.display = 'none';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Update status
+                    statusTip.innerText = '如果下载没有开始，请点击下方按钮';
+                }, 1000);
+            }
+        })();
+    </script>
+</body>
+</html>
