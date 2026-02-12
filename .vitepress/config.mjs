@@ -3,6 +3,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "谢氏老中医馆",
   description: "收集常用的命令和工具下载",
+  outDir: './dist',
 
   head: [
     /*
