@@ -14,10 +14,195 @@
 
   /* 變彩色 (使用 VitePress 的主題品牌顏色，會自動適應深淺模式) */
   color: var(--vp-c-brand-1);
-
-  /* * (備選方案) 如果您不想要主題色，
-   * 想要一個固定的亮藍色 (像 QQ 的顏色)，
-   * 可以用下面這行替換掉上面那行 color：
-   * color: #00a0e9; 
-   */
 }
+
+/* 
+ * 首页 Hero 区域重构：
+ * 1. 轮播图在最上方 (Order 1)
+ * 2. 文本+文件传输助手在下方 (Order 2)，且为左右布局
+ */
+
+/* 大屏幕适配 */
+@media (min-width: 960px) {
+  /* 强制上下布局：上面是轮播图，下面是文字内容 */
+  .VPHero .container {
+    flex-direction: column !important;
+    max-width: 1200px !important;
+  }
+
+  /* 
+   * 文本区域 .main
+   * 我们通过 grid 布局将其变为左右两栏
+   * 左边：原来的标题、文本、按钮
+   * 右边：我们注入的 FileTransfer 组件
+   */
+  .VPHero .main {
+    width: 100% !important;
+    max-width: 100% !important;
+    order: 2; /* 文本在下方 */
+    margin-top: 40px; 
+    margin-bottom: 20px;
+    
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 左右各占 50% */
+    gap: 40px;
+    align-items: center; /* 垂直居中 */
+  }
+
+  /* 
+   * 左侧内容：因为 VPHero .main 内部的元素是平级的（h1, p, .actions）
+   * 我们需要把它们 "聚拢" 到 grid 的左边。
+   * 但 CSS grid 的直接子元素会占据 grid cell。
+   * VPHero .main 的结构通常是:
+   * .main
+   *   .name (h1)
+   *   .text (p)
+   *   .tagline (p)
+   *   .actions (div)
+   *   .file-transfer-image-container (我们注入的组件，作为 .main 的最后一个子元素)
+   * 
+   * 所以我们需要让前几个元素都在第一列，最后一个元素在第二列。
+   */
+   
+   /* 前面的所有元素放到第一列 */
+   .VPHero .main > *:not(.file-transfer-image-container) {
+     grid-column: 1 / 2;
+     text-align: left; /* 左对齐文字 */
+     margin-left: 0 !important;
+     margin-right: 0 !important;
+   }
+
+   /* 特殊处理：让标题等元素左对齐 */
+   .VPHero .name,
+   .VPHero .text,
+   .VPHero .tagline {
+     text-align: left;
+     margin-left: 0;
+     margin-right: auto;
+   }
+   
+   .VPHero .actions {
+     justify-content: flex-start !important; /* 按钮左对齐 */
+   }
+
+   /* 我们的新组件放到第二列 */
+   .file-transfer-image-container {
+     grid-column: 2 / 3;
+     grid-row: 1 / 5; /* 跨越前面的所有行，占据右侧 */
+     justify-self: center;
+   }
+
+  /* 轮播图/图片区域 */
+  .VPHero .image {
+    width: 100% !important;
+    max-width: 100% !important;
+    order: 1; /* 图片在上方 */
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* 隐藏默认的背景光晕，避免干扰轮播图 */
+  .VPHero .image-bg {
+    display: none !important;
+  }
+
+  /* 调整 slot 内容的容器 */
+  .VPHero .image-container {
+    width: 100% !important;
+    max-width: 1200px !important; /* 与轮播图组件最大宽度一致 */
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 959px) {
+  /* 移动端保持垂直堆叠 */
+  .VPHero .container {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .VPHero .image {
+    width: 100% !important;
+    order: 1 !important; /* 图片在上方 */
+    margin-bottom: 20px;
+  }
+  
+  .VPHero .main {
+    order: 2 !important; /* 文本在下方 */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* 移动端文字居中 */
+  .VPHero .main > * {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .VPHero .actions {
+    justify-content: center !important;
+  }
+  
+  /* 文件传输助手图片在移动端也显示在文字下方 */
+  .file-transfer-image-container {
+    margin-top: 20px;
+  }
+
+  .VPHero .image-container {
+    width: 100% !important;
+  }
+  
+  /* 移动端也隐藏背景光晕 */
+  .VPHero .image-bg {
+    display: none !important;
+  }
+}
+
+/* 底部交流互动区域文字放大 */
+.footer-links {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-top: 40px;
+}
+
+.footer-links h3 {
+  font-size: 1.8rem !important;
+  margin-bottom: 20px !important;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+/* 增强顶部导航栏可见性 - 极简胶囊风格 */
+.VPNavBarMenuLink {
+  padding: 4px 12px !important; /* 适中的内边距 */
+  margin: 0 2px;
+  border-radius: 6px; /* 圆角 */
+  transition: all 0.25s ease;
+  font-weight: 500 !important;
+  /* 默认无背景，保持清爽 */
+}
+
+.VPNavBarMenuLink:hover {
+  background-color: var(--vp-c-default-soft) !important; /* 悬停时显示极淡背景 */
+  color: var(--vp-c-brand-1) !important;
+}
+
+.VPNavBarMenuLink.active {
+  background-color: var(--vp-c-brand-soft) !important; /* 激活时显示柔和品牌色背景 */
+  color: var(--vp-c-brand-1) !important;
+  font-weight: 600 !important; /* 激活时稍微加粗 */
+}
+
+

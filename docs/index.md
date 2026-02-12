@@ -1,46 +1,74 @@
-# 必读
-以下脚本获取到root权限后再操作，获取root权限是执行 
+---
+layout: home
+
+hero:
+
+  name: "FlatNas"
+  text: "轻量级个人导航页与仪表盘系统"
+  tagline: "自带文件传输助手、日历、天气、备忘录、代办、RSS 订阅、热搜榜单、音乐播放器等组件，为 NAS 用户、极客和开发者提供的优雅导航起始页"
+  actions:
+    - theme: brand
+      text: 🚀 FPK安装
+      link: /flatnas1.0.41all.fpk
+      target: _self
+      download: true
+    - theme: alt
+      text: 📦 Docker 部署
+      link: https://hub.docker.com/r/qdnas/flatnas
+      target: _blank
+    - theme: alt
+      text: 🐱 GitHub
+      link: https://github.com/Garry-QD/FlatNas
+      target: _blank
+    - theme: alt
+      text: 🌐 官网地址
+      link: https://flatnas.top/
+      target: _blank
+
+features:
+  - title: 🖥️ 自由布局
+    details: 支持网格布局，自由拖拽，不同尺寸组件随心配置，完美适配桌面与移动端。
+  - title: 🧩 丰富组件
+    details: 内置书签、时钟、天气、Todo、RSS 订阅、热搜榜单及音乐播放器。
+  - title: 🌐 智能网络
+    details: 集成智能网络环境识别，根据访问来源自动切换内外网访问策略。
+  - title: 🎨 个性定制
+    details: 支持自定义图标、壁纸及分组背景，内置版本检测与数据安全保护。
+
+---
+
+# 🚀 快速开始
+
+### Docker-compose部署 (推荐)
 ```bash
-sudo -i
-```
-##
-### 飞牛依赖修复脚本 <small> [作者:谢观如院长](https://club.fnnas.com/forum.php?mod=viewthread&tid=33052)</small>
-官方出品修复依赖的脚本，如果你更新不了，FN开启不了，经常出现小问题（网络环境正常的情况下）请执行它
-这不是补药，没问题请不要乱用
-```bash
-curl http://qdnas.icu/fixapt.sh | bash
+version: "3.8"
+
+services:
+  flatnas:
+    image: qdnas/flatnas:1.0.41
+    container_name: flatnas
+    restart: unless-stopped
+    ports:
+      - "23000:3000"
+    volumes:
+      - ./data:/app/server/data #指定路径下新建data
+      - ./music:/app/server/music #映射播放器路径
+      - ./PC:/app/server/PC #映射背景路径
+      - ./APP:/app/server/APP #映射移动端背景路径
+      - ./doc:/app/server/doc #映射文件传输助手路径
+      - /var/run/docker.sock:/var/run/docker.sock #映射Docker Socket
+
 ```
 
-##
-### 飞牛docker重置脚本  <small>[作者:七月七夕](https://github.com/qiyueqixi/fnos) </small>
-虽然删除掉/etc/docker/daemon.json的配置文件也能重置，但是总归没脚本操作方便
-```bash
-curl http://qdnas.icu/docker_reset.sh | bash
-```
+<div class="footer-links">
 
-##
-### 重新开启SWAP脚本 <small> [作者:七月七夕](https://github.com/qiyueqixi/fnos) </small>
-重新开启SWAP，这个脚本是给用服务器做飞牛的人用的，理论上其他debian系的都可以用。
-```bash
-curl http://qdnas.icu/swap_manage.sh | bash
-```
+### 交流互动
 
-##
-### 飞牛聚合脚本 <small> [作者:又菜又爱玩的小朱猪](https://gitee.com/xiao-zhu245/fnscript) </small>
+- **GitHub**: [Garry-QD/FlatNas](https://github.com/Garry-QD/FlatNas)
+- **Gitee**: [gjx0808/FlatNas](https://gitee.com/gjx0808/FlatNas)
+- **官网**: [flatnas.top](https://flatnas.top/)
+📱或扫描下方的二维码：
+![alt text](770c2281aaeb9096b997178db2b7b818.png)
 
-  一个比较齐全执行脚本的集合库，可以修复上述的问题，推荐使用他的一键开启IOMMU直通和网络诊断
-```bash
-git clone https://gitee.com/xiao-zhu245/fnscript.git
-cd fnscript/
-python3 menu.py
-```
-![图片描述，用于无障碍](/pig.png)
-
-##
-### GPU编解码能力检测 <small>[作者:青团](https://club.fnnas.com/forum.php?mod=viewthread&tid=39199) </small>
-直接查询你的NAS硬件和软件支持的视频格式
-```bash
-curl -sSL http://qdnas.icu/check_gpu.sh | sed 's/\r$//' | bash
-```
-![图片描述，用于无障碍](/check_gpu.png)
+</div>
 

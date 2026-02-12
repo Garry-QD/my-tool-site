@@ -4,18 +4,40 @@ export default defineConfig({
   title: "谢氏老中医馆",
   description: "收集常用的命令和工具下载",
 
+  head: [
+    [
+      'script',
+      {},
+      `
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?dc721bfdbf3df3ea9776539aa8ba0d4b";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+      `
+    ]
+  ],
+
   themeConfig: {
 
     // 顶部导航栏 (使用你 'commands' 文件夹的路径)
     nav: [
       { text: '首页', link: '/' },
-      { text: '飞牛大全', link: '/QA/wiki.md' },
-      { text: '下载专区', link: '/downloads/downloads.md' },
+      { text: '脚本库', link: '/scripts/scripts.md' },
+      { text: '命令库', link: '/command/command.md' },
+      { text: '飞牛疑难百科', link: '/QA/wiki.md' },
+      { text: '磁盘修复扫描工具', link: '/downloads/tools.md' },
+      { text: '其他工具下载', link: '/downloads/downloads.md' },
+      { text: 'deb离线升级镜像', link: '/deb/deb.md' },
+      { text: '建站工具', link: '/scripts/website building.md' },
       { text: '互动交流', link: '/join-qq.md' },
     ], // <-- 那个错误就是因为少了这里的逗号
 
     // 侧边栏 (使用 'commands' 和 'downloads' 路径)
     sidebar: [
+      { text: '首页', link: '/' },
       {
         text: '飞牛大全',
         items: [
